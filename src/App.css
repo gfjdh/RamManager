@@ -1,0 +1,488 @@
+/* App.css */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --accent-color: #e74c3c;
+  --background-color: #f8f9fa;
+  --text-color: #343a40;
+  --border-color: #dee2e6;
+  --replacement-color: #f39c12;
+  --page-fault-color: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+nav button {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+nav button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+nav button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 1.5rem 0;
+  color: #6c757d;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 动态分区分配样式 */
+.dynamic-partition {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.controls button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.controls button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.controls button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.controls select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.memory-visualization-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.memory-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.memory-bar {
+  border: 1px solid #333;
+  margin-top: 0.5rem;
+  background-color: #e0e0e0;
+}
+
+.size-label {
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: rgba(0,0,0,0.3);
+  padding: 1px 0;
+}
+
+.operation-log {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.operation-log ul {
+  list-style-type: none;
+}
+
+.operation-log li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.operation-log li:last-child {
+  border-bottom: none;
+}
+
+.status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.job-list {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.job-info {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.job-info:last-child {
+  border-bottom: none;
+}
+
+/* 请求调页存储管理样式 */
+.page-replacement {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.current-instruction {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.page-fault-indicator {
+  display: inline-block;
+  margin-left: 1rem;
+  padding: 0.2rem 0.5rem;
+  background-color: var(--page-fault-color);
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.memory-frames {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.frames-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.memory-frame {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.memory-frame.free {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.memory-frame.occupied {
+  background-color: var(--secondary-color);
+  color: white;
+  border-color: var(--secondary-color);
+}
+
+.memory-frame.replaced {
+  background-color: var(--replacement-color);
+  border-color: var(--replacement-color);
+  color: white;
+}
+
+.frame-id {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.page-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.replacement-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0 8px 0 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.page-table {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pages-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.page-table-entry {
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.page-table-entry.in-memory {
+  background-color: rgba(46, 204, 113, 0.2);
+  border-color: var(--secondary-color);
+}
+
+.page-table-entry.in-disk {
+  background-color: rgba(236, 240, 241, 0.5);
+}
+
+.page-table-entry.referenced {
+  border: 2px solid var(--primary-color);
+  font-weight: bold;
+}
+
+.progress {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+  height: 1.8rem;
+  background-color: #ecf0f1;
+  border-radius: 4px;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.next-button {
+  align-self: center;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.next-button:hover {
+  background-color: #c0392b;
+}
+
+.app {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  .app {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 400px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .controls select, .controls button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .status {
+    grid-template-columns: 1fr;
+  }
+  
+  .frames-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .pages-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  nav button {
+    width: 100%;
+  }
+  
+  .frames-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .pages-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .frames-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .pages-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.log-container {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.manual-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.manual-controls button {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+}
