@@ -15,10 +15,10 @@
 ### 快速使用
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/memory-management-simulator.git
+git clone git clone https://github.com/gfjdh/RamManager.git
 
 # 进入项目目录
-cd memory-management-simulator
+cd RamManager
 
 # 启动服务器
 serve -s dist   
@@ -26,10 +26,10 @@ serve -s dist
 ### 二次开发
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/memory-management-simulator.git
+git clone git clone https://github.com/gfjdh/RamManager.git
 
 # 进入项目目录
-cd memory-management-simulator
+cd RamManager
 
 # 安装依赖
 npm install
