@@ -68,14 +68,6 @@ const DynamicPartition: React.FC = () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const runAllSteps = () => {
-    resetSimulation();
-    steps.forEach(() => {
-      // 模拟逐步执行
-      setTimeout(executeStep, 800);
-    });
-  };
-
   return (
     <div className="dynamic-partition">
       <div className="controls">
@@ -86,9 +78,6 @@ const DynamicPartition: React.FC = () => {
         <button onClick={resetSimulation}>重置</button>
         <button onClick={executeStep} disabled={currentStep >= steps.length}>
           执行下一步
-        </button>
-        <button onClick={runAllSteps} disabled={currentStep >= steps.length}>
-          全部执行
         </button>
       </div>
       

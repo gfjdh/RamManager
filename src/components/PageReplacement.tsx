@@ -224,8 +224,6 @@ const PageReplacement: React.FC = () => {
 
     // 自动执行步骤
     useEffect(() => {
-        let timer: number;
-
         if (isRunning && currentStep < simulationSteps.length) {
             const step = simulationSteps[currentStep];
             let logEntry = `指令#${step.step}: 地址 ${step.instructionAddress} -> 页 ${step.page}`;
@@ -240,17 +238,9 @@ const PageReplacement: React.FC = () => {
             }
 
             setOperationLog(prevLog => [...prevLog, logEntry]);
-
-            if (currentStep < simulationSteps.length - 1) {
-                timer = window.setTimeout(() => {
-                    setCurrentStep(prev => prev + 1);
-                }, 300);
-            }
         }
 
-        return () => {
-            if (timer) clearTimeout(timer);
-        };
+        return () => { };
     }, [isRunning, currentStep, simulationSteps.length]);
 
     return (
@@ -265,19 +255,43 @@ const PageReplacement: React.FC = () => {
                     开始模拟
                 </button>
             </div>
-            <div className="stats">
-                <div className="stat-item">
-                    <span className="stat-label">总指令数:</span>
-                    <span className="stat-value">{instructionSequence.length}</span>
-                </div>
-                <div className="stat-item">
-                    <span className="stat-label">缺页次数:</span>
-                    <span className="stat-value">{pageFaults}</span>
-                </div>
-                <div className="stat-item">
-                    <span className="stat-label">缺页率:</span>
-                    <span className="stat-value">{pageFaultRate}%</span>
-                </div>
+            <div className="manual-controls">
+                <button
+                    onClick={() => setCurrentStep(0)}
+                    disabled={currentStep === 0}
+                >
+                    重置到开始
+                </button>
+                <button
+                    onClick={() => setCurrentStep(prev => Math.max(prev - 10, 0))}
+                    disabled={currentStep === 0}
+                >
+                    后退10步
+                </button>
+                <button
+                    onClick={() => setCurrentStep(prev => Math.max(prev - 1, 0))}
+                    disabled={currentStep === 0}
+                >
+                    上一步
+                </button>
+                <button
+                    onClick={() => setCurrentStep(prev => Math.min(prev + 1, instructionSequence.length - 1))}
+                    disabled={currentStep >= instructionSequence.length - 1}
+                >
+                    下一步
+                </button>
+                <button
+                    onClick={() => setCurrentStep(prev => Math.min(prev + 10, instructionSequence.length - 1))}
+                    disabled={currentStep >= instructionSequence.length - 1}
+                >
+                    前进10步
+                </button>
+                <button
+                    onClick={() => setCurrentStep(instructionSequence.length - 1)}
+                    disabled={currentStep >= instructionSequence.length - 1}
+                >
+                    跳到最后
+                </button>
             </div>
 
             {simulationSteps.length > 0 && currentStep < simulationSteps.length && (
@@ -311,9 +325,7 @@ const PageReplacement: React.FC = () => {
                                     <div className="page-number">
                                         {page !== null ? `页 ${page}` : '空闲'}
                                     </div>
-                                    {simulationSteps[currentStep].replacedFrame === frameId && (
-                                        <div className="replacement-indicator">置换</div>
-                                    )}
+                                    {simulationSteps[currentStep].replacedFrame === frameId && (<div className="replacement-indicator">置换</div>)}
                                 </div>
                             ))}
                         </div>
@@ -358,58 +370,30 @@ const PageReplacement: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <div className="stats">
+                <div className="stat-item">
+                    <span className="stat-label">总指令数:</span>
+                    <span className="stat-value">{instructionSequence.length}</span>
+                </div>
+                <div className="stat-item">
+                    <span className="stat-label">缺页次数:</span>
+                    <span className="stat-value">{pageFaults}</span>
+                </div>
+                <div className="stat-item">
+                    <span className="stat-label">缺页率:</span>
+                    <span className="stat-value">{pageFaultRate}%</span>
+                </div>
+            </div>
             {/* 添加日志区域 */}
             <div className="operation-log">
                 <h3>模拟日志</h3>
-                <div className="log-container">
-                    {operationLog.map((log, index) => (
-                        <div
-                            key={index}
-                            className={`log-entry ${log.includes('缺页') ? 'page-fault' : log.includes('置换') ? 'replacement' : ''
-                                }`}
-                        >
-                            {log}
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="manual-controls">
-                <button
-                    onClick={() => setCurrentStep(0)}
-                    disabled={currentStep === 0}
-                >
-                    重置到开始
-                </button>
-                <button
-                    onClick={() => setCurrentStep(prev => Math.max(prev - 10, 0))}
-                    disabled={currentStep === 0}
-                >
-                    后退10步
-                </button>
-                <button
-                    onClick={() => setCurrentStep(prev => Math.max(prev - 1, 0))}
-                    disabled={currentStep === 0}
-                >
-                    上一步
-                </button>
-                <button
-                    onClick={() => setCurrentStep(prev => Math.min(prev + 1, instructionSequence.length - 1))}
-                    disabled={currentStep >= instructionSequence.length - 1}
-                >
-                    下一步
-                </button>
-                <button
-                    onClick={() => setCurrentStep(prev => Math.min(prev + 10, instructionSequence.length - 1))}
-                    disabled={currentStep >= instructionSequence.length - 1}
-                >
-                    前进10步
-                </button>
-                <button
-                    onClick={() => setCurrentStep(instructionSequence.length - 1)}
-                    disabled={currentStep >= instructionSequence.length - 1}
-                >
-                    跳到最后
-                </button>
+                {operationLog.map((log, index) => (
+                    <div
+                        key={index}
+                        className={`log-entry ${log.includes('缺页') ? 'page-fault' : log.includes('置换') ? 'replacement' : ''}`}>
+                        {log}
+                    </div>
+                ))}
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'partition' | 'page'>('partition');
 
   return (
-    <div className="app" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+    <div className="app" style={{ width: '130%', margin: '0' }}>
       <header className="header">
         <h1>内存管理模拟器</h1>
         <nav>
